@@ -2,6 +2,7 @@ from sources.web_scraper import WebScraper
 from exporters.csv_exporter import CSVExporter
 from exporters.xml_exporter import XMLExporter
 from exporters.json_exporter import JSONExporter
+from filters.filter_manager import FilterManager
 import pandas as pd
 import os
 from datetime import datetime
@@ -17,6 +18,13 @@ def main():
 
     print(f" Scraped {len(df)} links")
     print(df.head())
+
+    apply_filter = input("Do you want to proceed with filtering your data? (y/n)")
+    if apply_filter == "y": 
+        filter_manager = FilterManager(df)
+        df = filter_manager.select_filter(url)
+    else: 
+        print("Using all scraped data without filtering")
 
     print("Choose export format:")
     print("1 = CSV")
